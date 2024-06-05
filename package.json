@@ -1,0 +1,25 @@
+{
+  "name": "express-carent",
+  "version": "1.0.0",
+  "description": "back-end for carent app",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliAK30/express-carent.git"
+  },
+  "author": "Ali Ahmed Khan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AliAK30/express-carent/issues"
+  },
+  "homepage": "https://github.com/AliAK30/express-carent#readme",
+  "dependencies": {
+    "debug": "^4.3.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.3"
+  }
+}
