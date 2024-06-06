@@ -1,24 +1,25 @@
 const User = require("../models/user");
 
-checkDuplicateEmail = (req, res, next) => {
-  
-    // Email
-    User.findOne({
-      email: req.body.email,
-    }).exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-
+checkDuplicateEmail = async (req, res, next) => {
+  // Email
+  await User.findOne({
+    email: req.body.email,
+  }).then(
+    (user) => {
       if (user) {
-        res.status(400).send({ message: "Failed! Email is already in use!" });
+        console.log("user already exists");
+        res.status(400).send({ message: "user exists already" });
         return;
       }
+      next()
+    },
+    (err) => {
+      console.log(err);
+      res.status(500).send({ message: err });
+      return;
+    }
+  );
 
-      next();
-    });
-  }
-
+};
 
 module.exports = checkDuplicateEmail;
