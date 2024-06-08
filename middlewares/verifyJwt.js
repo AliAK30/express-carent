@@ -1,6 +1,4 @@
 const jwt = require("jsonwebtoken");
-//const config = require("../config/auth.config.js");
-const User = require("../models/user");
 
 verifyToken = (req, res, next) => {
   let token = req.cookies.get("carent-session-token");
