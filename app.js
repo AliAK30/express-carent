@@ -45,9 +45,19 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authenticationRouter);
 
-const upload = multer({ dest: './public/images/' })
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/images/')
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix + '-' + file.originalname)
+  }
+})
 
-app.use("/user", upload.array("images", 6), userRouter)
+const upload = multer({ storage: storage})
+
+app.use("/user", upload.array("car_images", 6), userRouter)
 
 app.get("/", (req, res, next) => {
   res.send("Welcome to Carent Back-End");
