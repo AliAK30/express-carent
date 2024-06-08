@@ -4,12 +4,17 @@ var cors = require("cors");
 var mongoose = require("mongoose");
 var Cookies = require("cookies");
 var authenticationRouter = require("./routes/auth.routes");
+var path = require("path");
+
+
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
 
 //Get port from environment and store in Express.
 const port = process.env.PORT || "3000";
 
-//var path = require("path");
-//app.use(express.static(path.join(__dirname, 'public')));
+
 
 var db = mongoose
   .connect(process.env.conString, {
@@ -24,18 +29,17 @@ var db = mongoose
     process.exit();
   });
 
-
 var app = express();
 var corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: "http://localhost:5173",
   credentials: true,
 };
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors(corsOptions));
-app.use(Cookies.express())
+app.use(Cookies.express());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 
 app.use("/auth", authenticationRouter);
 
