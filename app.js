@@ -4,11 +4,13 @@ var cors = require("cors");
 var mongoose = require("mongoose");
 var Cookies = require("cookies");
 var authenticationRouter = require("./routes/auth.routes");
+var userRouter = require("./routes/user.routes")
 var path = require("path");
-
-
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+
+
+
+
 
 
 //Get port from environment and store in Express.
@@ -42,6 +44,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authenticationRouter);
+
+const upload = multer({ dest: './public/images/' })
+
+app.use("/user", upload.array("images", 6), userRouter)
 
 app.get("/", (req, res, next) => {
   res.send("Welcome to Carent Back-End");
