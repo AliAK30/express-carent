@@ -45,7 +45,11 @@ exports.signin = async (req, res, next) => {
       expiresIn: 1800, // 30 minutes
     });
 
-    res.cookies.set('carent-session-token', token, {
+    const obj = {token: token, id: user._id}
+
+  
+
+    res.cookies.set('carent-session-token', JSON.stringify(obj), {
       httpOnly: false,
       maxAge: 24 * 60 * 60 * 1000 //24 hours
     })

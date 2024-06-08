@@ -9,13 +9,11 @@ var path = require("path");
 const multer  = require('multer')
 
 
-
-
-
-
 //Get port from environment and store in Express.
 const port = process.env.PORT || "3000";
 
+
+//DATABASE CONNECTION 
 
 
 var db = mongoose
@@ -32,16 +30,23 @@ var db = mongoose
   });
 
 var app = express();
+
 var corsOptions = {
   origin: "http://localhost:5173",
   credentials: true,
 };
+
+//MIDDLEWARES
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors(corsOptions));
 app.use(Cookies.express());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+
+//ROUTES
+
 
 app.use("/auth", authenticationRouter);
 
@@ -57,13 +62,17 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage})
 
-app.use("/user", upload.array("car_images", 6), userRouter)
+const verifyToken = require("./middlewares/verifyJwt")
+
+app.use("/user", verifyToken, upload.array("car_images", 6), userRouter)
 
 app.get("/", (req, res, next) => {
   res.send("Welcome to Carent Back-End");
 });
 
-//Listen on provided port, on all network interfaces.
+
+//DEVELOPMENT SERVER
+
 
 app.listen(port);
 console.log("Server listening on port " + port);

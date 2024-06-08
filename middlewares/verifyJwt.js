@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 
 verifyToken = (req, res, next) => {
-  let token = req.cookies.get("carent-session-token");
+  let token = req.headers.authorization
+  //console.log(token)
 
   if (!token) {
     return res.status(403).send({ message: "No token provided!" });
@@ -13,6 +14,7 @@ verifyToken = (req, res, next) => {
         message: "Unauthorized!",
       });
     }
+
     req.userId = decoded.id;
     next();
   });
