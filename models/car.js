@@ -13,8 +13,9 @@ const Car = mongoose.model(
     photos_url: {type: [String], required: true},
     city: {type: String, required: true},
     address: {type: String, required: true},
-    user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
-    user_fullname: String
+    owner: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
+    owner_fullname: {type: String},
+    rented: {type: Boolean},
   })
 );
 
