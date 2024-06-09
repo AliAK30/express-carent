@@ -5,6 +5,7 @@ var mongoose = require("mongoose");
 var Cookies = require("cookies");
 var authenticationRouter = require("./routes/auth.routes");
 var userRouter = require("./routes/user.routes")
+var indexRouter = require("./routes/index.routes")
 var path = require("path");
 const multer  = require('multer')
 
@@ -66,9 +67,7 @@ const verifyToken = require("./middlewares/verifyJwt")
 
 app.use("/user", verifyToken, upload.array("car_images", 6), userRouter)
 
-app.get("/", (req, res, next) => {
-  res.send("Welcome to Carent Back-End");
-});
+app.use("/", indexRouter);
 
 
 //DEVELOPMENT SERVER

@@ -1,6 +1,6 @@
-const User = require("../models/user");
 const Car = require("../models/car");
-const mongoose = require('mongoose')
+const Booking = require("../models/booking")
+const ObjectId = require('mongoose').Types.ObjectId
 
 exports.addCar = async (req, res) => {
     const urls = req.files.map((file)=> {
@@ -18,7 +18,7 @@ exports.addCar = async (req, res) => {
         city: req.body.city,
         photos_url: urls,
         address: req.body.address,
-        owner: new mongoose.Types.ObjectId(req.body.owner),
+        owner: new ObjectId(req.body.owner),
         owner_fullname: req.body.owner_name,
         rented: false,
 
@@ -36,7 +36,8 @@ exports.addCar = async (req, res) => {
 }
 
 exports.getCars = async (req, res) => {
-    await Car.find().then((cars) => {
+    await Car.find({owner: new ObjectId(req.params.ownerid)}).then((cars) => {
+        console.log("All user cars sent successfully")
         res.send(cars);
       },
       (err) => {
@@ -45,5 +46,39 @@ exports.getCars = async (req, res) => {
       })
 }
 
+exports.getSpecificCar = async (req, res) => {
+    await Car.find({_id: new ObjectId(req.params.carid), owner: new ObjectId(req.params.ownerid), }).then((cars) => {
+        console.log("Specific car sent successfully")
+        res.send(cars);
+      },
+      (err) => {
+        res.status(500).send({ message: err });
+        return;
+      })
+}
+
+exports.rentCar = async (req, res) => {
+
+    const booking = new Booking({
+      from: req.body.from,
+      to: req.body.to,
+      total_bill: req.body.total_bill,
+      owner: new ObjectId(req.body.owner),
+      car_id: new ObjectId(req.body.car_id),
+      rented_by: new ObjectId(req.body.rented_by),
+
+    })
+
+    await booking.save().then(
+      (car) => {
+        console.log("Car booked successfully!", booking);
+        res.send({ message: "Car booked successfully!" });
+      },
+      (err) => {
+        res.status(500).send({ message: err });
+        return;
+      }
+    );
+}
 
 
