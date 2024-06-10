@@ -11,6 +11,7 @@ exports.addCar = async (req, res) => {
         make: req.body.make,
         model: req.body.model,
         year: req.body.year,
+        category: req.body.category,
         exterior_color: req.body.exterior_color,
         gas_mileage: req.body.gas_mileage,
         price_per_day: req.body.price_per_day,
@@ -68,10 +69,12 @@ exports.rentCar = async (req, res) => {
       rented_by: new ObjectId(req.body.rented_by),
 
     })
-
+   // await Car.updateOne({_id: booking.car_id}, {rent_status: true}).then(car=>{console.log(car)}, err=>console.log(err))
+  await  Car.updateOne({_id:{$eq: booking.car_id} }, {rented: true}).then(some=>console.log(some))
     await booking.save().then(
-      (car) => {
+      (booking) => {
         console.log("Car booked successfully!", booking);
+        
         res.send({ message: "Car booked successfully!" });
       },
       (err) => {

@@ -1,7 +1,7 @@
 const Car = require("../models/car");
 
 exports.getAllCars = async (req, res) => {
-  var filter = {}
+  var filter = {rented: false}
   if(req.query)
   {
     

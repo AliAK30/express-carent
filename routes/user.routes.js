@@ -11,6 +11,6 @@ router.get("/cars/:ownerid", controller.getCars)
 router.get("/cars/:ownerid/:carid", controller.getSpecificCar)
 
 //Route for renting a car
-router.post("car/rent", controller.rentCar)
+router.post("/car/rent", controller.rentCar)
 
 module.exports = router
