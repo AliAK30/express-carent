@@ -12,7 +12,7 @@ const Car = mongoose.model(
     price_per_day: {type: Number, required: true},
     description: {type: String, required: true},
     photos_url: {type: [String], required: true},
-    city: {type: String, lowercase: true, required: true},
+    city: {type: String, required: true},
     address: {type: String, required: true},
     owner: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
     owner_fullname: {type: String},

@@ -2,10 +2,15 @@ const Car = require("../models/car");
 const Booking = require("../models/booking")
 const ObjectId = require('mongoose').Types.ObjectId
 
+
+
 exports.addCar = async (req, res) => {
+
+  //console.log(req.body)
     const urls = req.files.map((file)=> {
         return file.path
     })
+
 
     const car = new Car({
         make: req.body.make,
@@ -69,8 +74,7 @@ exports.rentCar = async (req, res) => {
       rented_by: new ObjectId(req.body.rented_by),
 
     })
-   // await Car.updateOne({_id: booking.car_id}, {rent_status: true}).then(car=>{console.log(car)}, err=>console.log(err))
-  await  Car.updateOne({_id:{$eq: booking.car_id} }, {rented: true}).then(some=>console.log(some))
+  await  Car.updateOne({_id:{$eq: booking.car_id} }, {rented: true}).then(res=>console.log(res), err=>console.log(err))
     await booking.save().then(
       (booking) => {
         console.log("Car booked successfully!", booking);

@@ -13,8 +13,9 @@ exports.getAllCars = async (req, res) => {
     }
 
   }
+  //console.log(filter)
     await Car.find(filter).then((cars) => {
-      console.log("All cars sent successfully")
+      //console.log(cars)
       res.send(cars);
     },
     (err) => {
