@@ -88,4 +88,15 @@ exports.rentCar = async (req, res) => {
     );
 }
 
+exports.deleteCar = async (req, res) => {
+  await Booking.deleteMany({car_id: req.params.carid}).then(res=>console.log(res), err=>console.log(err))
+
+  await Car.findByIdAndDelete(req.params.carid).then((cars) => {
+    console.log("Car Deleted", cars)
+    res.send(cars);
+  },
+  (err) => {
+    res.status(500).send({ message: err });
+  })
+}
 
