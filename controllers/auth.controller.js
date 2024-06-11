@@ -45,7 +45,7 @@ exports.signin = async (req, res, next) => {
       expiresIn: 86400, // 30 minutes
     });
 
-    const obj = {token: token, id: user._id}
+    const obj = {token: token, id: user._id, fullname: user.fullname}
 
   
 

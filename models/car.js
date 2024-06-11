@@ -16,6 +16,7 @@ const Car = mongoose.model(
     address: {type: String, required: true},
     owner: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
     owner_fullname: {type: String},
+    date_added: {type: Date, default: Date.now},
     rented: {type: Boolean},
   })
 );
