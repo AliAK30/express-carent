@@ -19,4 +19,7 @@ router.post("/car/rent", controller.rentCar)
 //Route for getting bookings
 router.get("/bookings/:ownerid", controller.getBookings)
 
+//Route for deleting bookings
+router.delete("/bookings/delete/:bookingid", controller.deleteBooking)
+
 module.exports = router
