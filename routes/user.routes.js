@@ -16,4 +16,7 @@ router.delete("/car/delete/:carid", controller.deleteCar)
 //Route for renting a car
 router.post("/car/rent", controller.rentCar)
 
+//Route for getting bookings
+router.get("/bookings/:ownerid", controller.getBookings)
+
 module.exports = router
