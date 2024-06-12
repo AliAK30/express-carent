@@ -71,6 +71,10 @@ exports.rentCar = async (req, res) => {
       total_bill: req.body.total_bill,
       owner: new ObjectId(req.body.owner),
       car_id: new ObjectId(req.body.car_id),
+      make: req.body.make,
+      model: req.body.model,
+      price_per_day: req.body.price_per_day,
+      url: req.body.url,
       rented_by: new ObjectId(req.body.rented_by),
 
     })
@@ -88,4 +92,26 @@ exports.rentCar = async (req, res) => {
     );
 }
 
+exports.deleteCar = async (req, res) => {
+  await Booking.deleteMany({car_id: req.params.carid}).then(res=>console.log(res), err=>console.log(err))
+
+  await Car.findByIdAndDelete(req.params.carid).then((cars) => {
+    console.log("Car Deleted", cars)
+    res.send(cars);
+  },
+  (err) => {
+    res.status(500).send({ message: err });
+  })
+}
+
+exports.getBookings = async (req, res) => {
+  await Booking.find({rented_by: req.params.ownerid}).then((cars) => {
+      console.log("All bookings sent successfully")
+      res.send(cars);
+    },
+    (err) => {
+      res.status(500).send({ message: err });
+      return;
+    })
+}
 
