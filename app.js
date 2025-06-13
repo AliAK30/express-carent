@@ -14,8 +14,7 @@ const multer  = require('multer')
 const port = process.env.PORT || "3000";
 
 
-//DATABASE CONNECTION 
-
+//MONGODB DATABASE CONNECTION
 
 //MONGODB DATABASE CONNECTION
 
