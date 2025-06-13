@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 
-const Superuser = mongoose.model(
-  "Superuser",
+const User = mongoose.model(
+  "User",
   new mongoose.Schema({
-    username: {type: String, required: true},
+    fullname: {type: String, required: true},
+    email: {type: String, required: true},
     password: {type: String, required: true},
-    role: {type: String, required: true},
+    phone: Number,
+    cnic: String,
   })
 );
 
-module.exports = Superuser;
+module.exports = User;
