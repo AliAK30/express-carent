@@ -14,14 +14,10 @@ const multer  = require('multer')
 const port = process.env.PORT || "3000";
 
 
-//DATABASE CONNECTION 
-
+//MONGODB DATABASE CONNECTION
 
 var db = mongoose
-  .connect(process.env.conString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.conString, { dbName: "carent" })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
   })

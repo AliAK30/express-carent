@@ -2,7 +2,7 @@ const Car = require("../models/car");
 const Booking = require("../models/booking");
 const ObjectId = require("mongoose").Types.ObjectId;
 
-exports.addCar = async (req, res) => {
+exports.addCar = (req, res) => {
   //console.log(req.body)
   const urls = req.files.map((file) => {
     return file.path;
@@ -24,7 +24,8 @@ exports.addCar = async (req, res) => {
     owner_fullname: req.body.owner_name,
     rented: false,
   });
-  await car.save().then(
+  
+  car.save().then(
     (car) => {
       console.log("Car was added successfully!", car);
       res.send({ message: "Car was added successfully!" });
