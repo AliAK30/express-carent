@@ -3,12 +3,27 @@ var jwt = require("jsonwebtoken");
 const User = require("../models/user");
 var bcrypt = require("bcryptjs");
 
+const formatName = (name) =>{
+  if(name)
+  {
+    parts = name.split(" ");
+    formattedNameParts = parts.filter(Boolean).map((part)=>part.charAt(0).toUpperCase()+part.slice(1).toLowerCase());
+    return formattedNameParts.join(" ");
+  }
+  return ""
+}
+
+
+
 exports.signup = async (req, res) => {
   const user = new User({
-    fullname: req.body.fullname,
-    email: req.body.email,
+    fullname: formatName(req.body.fullname.trim()),
+    email: req.body.email.trim().toLowerCase(),
     password: bcrypt.hashSync(req.body.password, 8),
   });
+
+ // console.log(user);
+  //return res.send({ message: "User was registered successfully!" });
   
   await user.save().then(
     (user) => {
@@ -25,7 +40,7 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res, next) => {
   
   await User.findOne({
-    email: req.body.email,
+    email: req.body.email.trim().toLowerCase(),
   }).then((user) => {
     
 
